@@ -2,7 +2,7 @@ import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useContext, useRef } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View, Platform } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import customMapStyle from '../../map-style.json';
@@ -15,9 +15,13 @@ export default function EventsMap(props: StackScreenProps<any>) {
     const authenticationContext = useContext(AuthenticationContext);
     const mapViewRef = useRef<MapView>(null);
 
-    const handleNavigateToCreateEvent = () => {};
+    const handleNavigateToCreateEvent = () => {
+        console.log('Navigate to create event');
+    };
 
-    const handleNavigateToEventDetails = () => {};
+    const handleNavigateToEventDetails = () => {
+        console.log('Navigate to event details');
+    };
 
     const handleLogout = async () => {
         AsyncStorage.multiRemove(['userInfo', 'accessToken']).then(() => {
@@ -28,46 +32,46 @@ export default function EventsMap(props: StackScreenProps<any>) {
 
     return (
         <View style={styles.container}>
-            <MapView
-                ref={mapViewRef}
-                provider={PROVIDER_GOOGLE}
-                initialRegion={MapSettings.DEFAULT_REGION}
-                style={styles.mapStyle}
-                customMapStyle={customMapStyle}
-                showsMyLocationButton={false}
-                showsUserLocation={true}
-                rotateEnabled={false}
-                toolbarEnabled={false}
-                moveOnMarkerPress={false}
-                mapPadding={MapSettings.EDGE_PADDING}
-                onLayout={() =>
-                    mapViewRef.current?.fitToCoordinates(
-                        events.map(({ position }) => ({
-                            latitude: position.latitude,
-                            longitude: position.longitude,
-                        })),
-                        { edgePadding: MapSettings.EDGE_PADDING }
-                    )
-                }
-            >
-                {events.map((event) => {
-                    return (
-                        <Marker
-                            key={event.id}
-                            coordinate={{
-                                latitude: event.position.latitude,
-                                longitude: event.position.longitude,
-                            }}
-                            onPress={handleNavigateToEventDetails}
-                        >
-                            <Image resizeMode="contain" style={{ width: 48, height: 54 }} source={mapMarkerImg} />
-                        </Marker>
-                    );
-                })}
-            </MapView>
+<MapView
+    ref={mapViewRef}
+    // Remove Google provider - use default
+    // provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : undefined}
+    initialRegion={{
+        latitude: 51.03,
+        longitude: -114.093,
+        latitudeDelta: 0.05,
+        longitudeDelta: 0.05,
+    }}
+    style={styles.mapStyle}
+    showsMyLocationButton={false}
+    showsUserLocation={false}
+    rotateEnabled={true}
+    toolbarEnabled={false}
+    moveOnMarkerPress={false}
+    onMapReady={() => {
+        console.log('✅ Map loaded successfully!');
+    }}
+    onRegionChange={() => {
+        console.log('Map region changed');
+    }}
+>
+    {events.map((event) => {
+        return (
+            <Marker
+                key={event.id}
+                coordinate={{
+                    latitude: event.position.latitude,
+                    longitude: event.position.longitude,
+                }}
+                title={`Event ${event.id.substring(0, 8)}`}
+                description="Tap for details"
+            />
+        );
+    })}
+</MapView>
 
             <View style={styles.footer}>
-                <Text style={styles.footerText}>X event(s) found</Text>
+                <Text style={styles.footerText}>{events.length} event(s) found</Text>
                 <RectButton
                     style={[styles.smallButton, { backgroundColor: '#00A3FF' }]}
                     onPress={handleNavigateToCreateEvent}
@@ -75,6 +79,7 @@ export default function EventsMap(props: StackScreenProps<any>) {
                     <Feather name="plus" size={20} color="#FFF" />
                 </RectButton>
             </View>
+            
             <RectButton
                 style={[styles.logoutButton, styles.smallButton, { backgroundColor: '#4D6F80' }]}
                 onPress={handleLogout}
@@ -101,8 +106,14 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 70,
         right: 24,
-
         elevation: 3,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
     },
 
     footer: {
@@ -110,17 +121,21 @@ const styles = StyleSheet.create({
         left: 24,
         right: 24,
         bottom: 40,
-
         backgroundColor: '#FFF',
         borderRadius: 16,
         height: 56,
         paddingLeft: 24,
-
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-
         elevation: 3,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
     },
 
     footerText: {
@@ -132,7 +147,6 @@ const styles = StyleSheet.create({
         width: 56,
         height: 56,
         borderRadius: 16,
-
         justifyContent: 'center',
         alignItems: 'center',
     },
