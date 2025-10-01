@@ -73,7 +73,7 @@ export default function EventsMap(props: StackScreenProps<any>) {
       <UrlTile
         urlTemplate="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         maximumZ={19}
-        zIndex={-1}
+        // zIndex={-1}
       />
 
                 {events.map((event) => {
