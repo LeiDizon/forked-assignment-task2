@@ -4,11 +4,14 @@ import { StackScreenProps } from '@react-navigation/stack';
 import React, { useContext, useRef } from 'react';
 import { Image, StyleSheet, Text, View, Platform } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import customMapStyle from '../../map-style.json';
 import * as MapSettings from '../constants/MapSettings';
 import { AuthenticationContext } from '../context/AuthenticationContext';
 import mapMarkerImg from '../images/map-marker.png';
+
+import MapView, { Marker } from 'react-native-maps';
+//Removed the google maps api provider for android testing
+//import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 
 export default function EventsMap(props: StackScreenProps<any>) {
     const { navigation } = props;
