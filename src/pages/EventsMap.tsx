@@ -9,9 +9,9 @@ import * as MapSettings from '../constants/MapSettings';
 import { AuthenticationContext } from '../context/AuthenticationContext';
 import mapMarkerImg from '../images/map-marker.png';
 
-import MapView, { Marker, UrlTile } from 'react-native-maps';
+// import MapView, { Marker, UrlTile } from 'react-native-maps';
 //Removed the google maps api provider for android testing
-//import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 
 export default function EventsMap(props: StackScreenProps<any>) {
     const { navigation } = props;
@@ -38,11 +38,11 @@ export default function EventsMap(props: StackScreenProps<any>) {
             <MapView
                 ref={mapViewRef}
                 //---------Testing
-                // provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : undefined}
+                provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : undefined}
                 initialRegion={MapSettings.DEFAULT_REGION}
                 style={styles.mapStyle}
                  //---------Testing
-                // customMapStyle={Platform.OS === 'android' ? customMapStyle : undefined}
+                customMapStyle={Platform.OS === 'android' ? customMapStyle : undefined}
                 showsMyLocationButton={false}
                 showsUserLocation={false}
                 rotateEnabled={false}
@@ -69,12 +69,12 @@ export default function EventsMap(props: StackScreenProps<any>) {
                     }, 1000);
                 }}
             >
-                      {/* OpenStreetMap tiles overlay */}
-      <UrlTile
+      {/* OpenStreetMap tiles overlay */
+      /* <UrlTile
         urlTemplate="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         maximumZ={19}
-        // zIndex={-1}
-      />
+        zIndex={-1}
+      /> */}
 
                 {events.map((event) => {
                     return (
