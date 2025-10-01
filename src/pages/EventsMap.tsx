@@ -9,7 +9,7 @@ import * as MapSettings from '../constants/MapSettings';
 import { AuthenticationContext } from '../context/AuthenticationContext';
 import mapMarkerImg from '../images/map-marker.png';
 
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, UrlTile } from 'react-native-maps';
 //Removed the google maps api provider for android testing
 //import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 
@@ -66,9 +66,16 @@ export default function EventsMap(props: StackScreenProps<any>) {
                                 }
                             );
                         }
-                    }, 1000);
+                    }, 500);
                 }}
             >
+                      {/* OpenStreetMap tiles overlay */}
+      <UrlTile
+        urlTemplate="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+        maximumZ={19}
+        zIndex={-1}
+      />
+
                 {events.map((event) => {
                     return (
                         <Marker
