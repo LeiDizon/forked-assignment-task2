@@ -19,6 +19,15 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ios: {
         supportsTablet: true,
     },
+        // ADD THIS NEW SECTION HERE ⬇
+    android: {
+        config: {
+            googleMaps: {
+                apiKey: "YOUR_GOOGLE_MAPS_API_KEY_HERE"
+            }
+        }
+    },
+    // END OF NEW SECTION ⬆
     web: {
         favicon: './assets/favicon.png',
     },
