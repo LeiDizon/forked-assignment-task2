@@ -32,43 +32,59 @@ export default function EventsMap(props: StackScreenProps<any>) {
 
     return (
         <View style={styles.container}>
-<MapView
-    ref={mapViewRef}
-    // Remove Google provider - use default
-    // provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : undefined}
-    initialRegion={{
-        latitude: 51.03,
-        longitude: -114.093,
-        latitudeDelta: 0.05,
-        longitudeDelta: 0.05,
-    }}
-    style={styles.mapStyle}
-    showsMyLocationButton={false}
-    showsUserLocation={false}
-    rotateEnabled={true}
-    toolbarEnabled={false}
-    moveOnMarkerPress={false}
-    onMapReady={() => {
-        console.log('✅ Map loaded successfully!');
-    }}
-    onRegionChange={() => {
-        console.log('Map region changed');
-    }}
->
-    {events.map((event) => {
-        return (
-            <Marker
-                key={event.id}
-                coordinate={{
-                    latitude: event.position.latitude,
-                    longitude: event.position.longitude,
+            <MapView
+                ref={mapViewRef}
+                //---------Testing
+                // provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : undefined}
+                initialRegion={MapSettings.DEFAULT_REGION}
+                style={styles.mapStyle}
+                 //---------Testing
+                // customMapStyle={Platform.OS === 'android' ? customMapStyle : undefined}
+                showsMyLocationButton={false}
+                showsUserLocation={false}
+                rotateEnabled={false}
+                toolbarEnabled={false}
+                moveOnMarkerPress={false}
+                 //---------Testing
+                // mapPadding={MapSettings.EDGE_PADDING}
+                onMapReady={() => {
+                    console.log('Map is ready with', events.length, 'events');
+                    // Delay the fitToCoordinates call to ensure map is fully loaded
+                    setTimeout(() => {
+                        if (mapViewRef.current && events.length > 0) {
+                            mapViewRef.current.fitToCoordinates(
+                                events.map(({ position }) => ({
+                                    latitude: position.latitude,
+                                    longitude: position.longitude,
+                                })),
+                                { 
+                                    edgePadding: MapSettings.EDGE_PADDING,
+                                    animated: true 
+                                }
+                            );
+                        }
+                    }, 1000);
                 }}
-                title={`Event ${event.id.substring(0, 8)}`}
-                description="Tap for details"
-            />
-        );
-    })}
-</MapView>
+            >
+                {events.map((event) => {
+                    return (
+                        <Marker
+                            key={event.id}
+                            coordinate={{
+                                latitude: event.position.latitude,
+                                longitude: event.position.longitude,
+                            }}
+                            onPress={handleNavigateToEventDetails}
+                        >
+                            <Image 
+                                resizeMode="contain" 
+                                style={{ width: 48, height: 54 }} 
+                                source={mapMarkerImg} 
+                            />
+                        </Marker>
+                    );
+                })}
+            </MapView>
 
             <View style={styles.footer}>
                 <Text style={styles.footerText}>{events.length} event(s) found</Text>
