@@ -66,7 +66,7 @@ export default function EventsMap(props: StackScreenProps<any>) {
                                 }
                             );
                         }
-                    }, 500);
+                    }, 1000);
                 }}
             >
                       {/* OpenStreetMap tiles overlay */}
@@ -102,7 +102,7 @@ export default function EventsMap(props: StackScreenProps<any>) {
                     style={[styles.smallButton, { backgroundColor: '#00A3FF' }]}
                     onPress={handleNavigateToCreateEvent}
                 >
-                    <Feather name="plus" size={20} color="#FFF" />
+                    <Feather name="plus" size={20} color="#FFFFFF" />
                 </RectButton>
             </View>
             
@@ -110,7 +110,7 @@ export default function EventsMap(props: StackScreenProps<any>) {
                 style={[styles.logoutButton, styles.smallButton, { backgroundColor: '#4D6F80' }]}
                 onPress={handleLogout}
             >
-                <Feather name="log-out" size={20} color="#FFF" />
+                <Feather name="log-out" size={20} color="#FFFFFF" />
             </RectButton>
         </View>
     );
