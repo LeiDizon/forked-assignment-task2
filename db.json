@@ -64,6 +64,7 @@
             },
             "email": "ulla.ulriksen@example.com",
             "password": "$2a$12$zQyAGjJyvcGGxwtD15AmreqBhSfAqff9r8f2k5OeW1GonjrzE9/9W",
+              "plainPassword": "password",
             "id": "EF-BZ00",
             "mobile": "(910) 862-3167"
         },
@@ -74,6 +75,7 @@
             },
             "email": "yasemin.akyuz@example.com",
             "password": "$2a$12$It3vV3R.vLKWKS5jKRdoeuFd5Ao1Xu2FXkXo28ierg7oHmw2DfW6e",
+              "plainPassword": "password",
             "id": "Q5bVHgP",
             "mobile": "(243) 359-9759"
         },
@@ -84,6 +86,7 @@
             },
             "email": "luigi@carluccio.it",
             "password": "$2a$12$/prmUGKya4t7U0Wzg0RqF.u1NRF/xVHrDB5y4g4CtnEpVl4K97qZ.",
+              "plainPassword": "password",
             "id": "gpFfX6e",
             "mobile": "(171) 946-2538"
         },
@@ -94,6 +97,7 @@
             },
             "email": "john@silva.com.br",
             "password": "$2a$12$kWrXFrn4Ftl3nFYHnpzQNOvQn2yB7QkpZooTZOOGLPoqGdaGXagHq",
+              "plainPassword": "password",
             "id": "3UN3-2L",
             "mobile": "(563) 589-2999"
         },
@@ -104,6 +108,7 @@
             },
             "email": "elif.aksit@example.com",
             "password": "$2a$12$R/QMmkbjO519o2yydjLYkem/HMEfRaVqpk84d9jWGmlp1CHGf60E.",
+              "plainPassword": "password",
             "id": "t1aL2Xq",
             "mobile": "(636) 336-9413"
         },
@@ -114,6 +119,7 @@
             },
             "email": "anne.vanwingerden@example.com",
             "password": "$2a$12$NId3f3ZYPkJiT9PLmCfesu9HlmbdpBT/Cp6W5CmPYr.Pd56IRwD9y",
+              "plainPassword": "password",
             "id": "tRHltUh",
             "mobile": "(306) 805-5821"
         },
@@ -124,6 +130,7 @@
             },
             "email": "gisele.oliveira@example.com",
             "password": "$2a$12$/98mZYhpX2FiGo8FRio.b.erGINTlHoKmjQayVCGPEaUKzMbVokEC",
+              "plainPassword": "password",
             "id": "3Ohd8sD",
             "mobile": "(905) 491-1184"
         },
@@ -134,6 +141,7 @@
             },
             "email": "sara.barnett@example.com",
             "password": "$2a$12$oJJ4zaAGHnC.PWouxJSOQ.hB8X.sXGxlfnDyTcTClkgkvRMfL9F5.",
+              "plainPassword": "password",
             "id": "Hr-40KW",
             "mobile": "(710) 271-3339"
         },
@@ -143,6 +151,7 @@
                 "last": "Gamez"
             },
             "password": "$2a$12$IqCPyZzqoCoVZEC/iKvCY.J8EkfUkRHVVUndRNMJgwdnx8tWGZu8S",
+              "plainPassword": "password",
             "email": "azuma.gamez@example.com",
             "id": "elKKrm3",
             "mobile": "(605) 964-2338"
@@ -154,6 +163,7 @@
             },
             "email": "eva.young@example.com",
             "password": "$2a$12$cdhrlcFLHD4KDV8Z2kyxjeTIelA/y1.ltw969MHoEkElCDOWnhwFe",
+              "plainPassword": "password",
             "id": "ajY8pM2",
             "mobile": "(543) 905-5629"
         },
@@ -164,6 +174,7 @@
     },
     "email": "test@example.com",
     "password": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+      "plainPassword": "password",
     "id": "test001",
     "mobile": "(000) 000-0000"
 }

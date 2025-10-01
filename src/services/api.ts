@@ -13,7 +13,7 @@ const api = axios.create({
 
     // baseURL: 'http://38.55.70.207:3333',
     baseURL: 'https://my-json-server.typicode.com/LeiDizon/forked-assignment-task2',
-    // baseURL: 'http://198.166.108.48:3333',
+  
 });
 
 // export const authenticateUser = (email: string, password: string): Promise<AxiosResponse> => {
