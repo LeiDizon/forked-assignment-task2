@@ -65,4 +65,16 @@ export const authenticateUser = async (email: string, password: string): Promise
     }
 };
 
+export interface ApiEvent {
+  id: string;
+  name: string;
+  description: string;
+  position: { latitude: number; longitude: number };
+}
+
+export const getEvents = async (): Promise<ApiEvent[]> => {
+  const res = await api.get<ApiEvent[]>('/events');
+  return res.data;
+};
+
 

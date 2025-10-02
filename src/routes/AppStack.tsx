@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import EventDetails from '../pages/EventDetails';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -30,6 +31,8 @@ export default function Routes() {
                     <Screen name="Login" component={Login} />
 
                     <Screen name="EventsMap" component={EventsMap} />
+
+                    <Screen name="EventDetails" component={EventDetails} options={{ title: 'Event details', headerShown: true }} />
                 </Navigator>
             </NavigationContainer>
         </AuthenticationContext.Provider>

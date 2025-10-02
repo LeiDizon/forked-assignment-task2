@@ -16,52 +16,108 @@ import { User } from '../types/User';
 import { isTokenExpired, sanitizeEmail, validateEmail } from '../utils';
 
 export default function Login({ navigation }: StackScreenProps<any>) {
+    // The authentication context is a React context that stores the user's information
+    // and a function to set the user's information
     const authenticationContext = useContext(AuthenticationContext);
+
+    // The email state is a string that stores the user's email
     const [email, setEmail] = useState('');
+
+    // The password state is a string that stores the user's password
     const [password, setPassword] = useState('');
-    const [emailIsInvalid, setEmailIsInvalid] = useState<boolean>();
-    const [passwordIsInvalid, setPasswordIsInvalid] = useState<boolean>();
+
+    // The emailIsInvalid state is a boolean that stores whether the user's email is invalid or not
+    const [emailIsInvalid, setEmailIsInvalid] = useState<boolean>(false);
+
+    // The passwordIsInvalid state is a boolean that stores whether the user's password is invalid or not
+    const [passwordIsInvalid, setPasswordIsInvalid] = useState<boolean>(false);
+
+    // The authError state is a string that stores the error message when the user tries to authenticate
     const [authError, setAuthError] = useState<string>();
 
+    // The accessTokenIsValid state is a boolean that stores whether the access token is valid or not
     const [accessTokenIsValid, setAccessTokenIsValid] = useState<boolean>(false);
+
+    // The isAuthenticating state is a boolean that stores whether the user is authenticating or not
     const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false);
+
+    // The isFocused state is a boolean that stores whether the screen is focused or not
     const isFocused = useIsFocused();
 
     useEffect(() => {
-        getFromCache('userInfo').then(
-            (cachedUserInfo) => authenticationContext?.setValue(cachedUserInfo as User),
-            (error: any) => console.log(error)
-        );
-        getFromCache('accessToken').then(
-            (accessToken) => accessToken && !isTokenExpired(accessToken as string) && setAccessTokenIsValid(true),
-            (error: any) => console.log(error)
-        );
-        if (authError)
-            Alert.alert('Authentication Error', authError, [{ text: 'Ok', onPress: () => setAuthError(undefined) }]);
+        // Get the user's information from the cache
+        getFromCache('userInfo')
+            .then(
+                (cachedUserInfo) => {
+                    // If the user's information is found in the cache, set the user's information in the authentication context
+                    authenticationContext?.setValue(cachedUserInfo as User);
+                },
+                (error: any) => {
+                    // If there is an error, log the error
+                    console.log(error);
+                }
+            );
+
+        // Get the access token from the cache
+        getFromCache('accessToken')
+            .then(
+                (accessToken) => {
+                    // If the access token is found in the cache and it is not expired, set the accessTokenIsValid state to true
+                    if (accessToken && !isTokenExpired(accessToken as string)) setAccessTokenIsValid(true);
+                },
+                (error: any) => {
+                    // If there is an error, log the error
+                    console.log(error);
+                }
+            );
+
+        // If there is an authentication error, show an alert with the error message
+        if (authError) {
+            Alert.alert('Authentication Error', authError, [
+                { text: 'Ok', onPress: () => setAuthError(undefined) },
+            ]);
+        }
     }, [authError]);
 
     useEffect(() => {
         if (accessTokenIsValid && authenticationContext?.value) navigation.navigate('EventsMap');
     }, [accessTokenIsValid]);
 
+    /**
+     * Handles the authentication of a user
+     * 
+     * First, it checks if the form is valid (email and password are not empty and email is valid)
+     * If the form is valid, it sets the isAuthenticating state to true
+     * Then, it makes a request to the API to authenticate the user with the provided email and password
+     * If the request is successful, it stores the user's information and the access token in the cache
+     * It also sets the user's information in the authentication context
+     * Finally, it sets the isAuthenticating state to false and navigates to the EventsMap screen
+     * If there is an error, it sets the error message in the authError state and sets the isAuthenticating state to false
+     */
     const handleAuthentication = () => {
         if (formIsValid()) {
             setIsAuthenticating(true);
+            // Make a request to the API to authenticate the user
             api.authenticateUser(sanitizeEmail(email), password)
                 .then((response) => {
+                    // Store the user's information and the access token in the cache
                     setInCache('userInfo', response.data.user);
                     setInCache('accessToken', response.data.accessToken);
+                    // Set the user's information in the authentication context
                     authenticationContext?.setValue(response.data.user);
+                    // Set the isAuthenticating state to false
                     setIsAuthenticating(false);
-                    123;
+                    // Navigate to the EventsMap screen
                     navigation.navigate('EventsMap');
                 })
                 .catch((error) => {
+                    // If there is an error, set the error message in the authError state
                     if (error.response) {
                         setAuthError(error.response.data);
                     } else {
                         setAuthError('Something went wrong.');
                     }
+                    // Set the isAuthenticating state to false
                     setIsAuthenticating(false);
                 });
         }
